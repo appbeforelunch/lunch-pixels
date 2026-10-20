@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- The page may not talk to any server: images stay on this device. -->
+  <meta http-equiv="Content-Security-Policy" content="connect-src 'none'; form-action 'none'; frame-src 'none'; object-src 'none'">
+  <title>Tessera — image editor</title>
+  <link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+  <div id="app">
+    <header class="topbar">
+      <div class="brand"><span id="brand-mark"></span><span class="brand-name">Tessera</span></div>
+      <nav class="menubar" id="menubar" aria-label="Main menu"></nav>
+      <div class="topbar-actions">
+        <button type="button" class="icon-btn" id="btn-undo" aria-label="Undo"></button>
+        <button type="button" class="icon-btn" id="btn-redo" aria-label="Redo"></button>
+        <button type="button" class="btn btn-primary" id="btn-export">Export</button>
+      </div>
+    </header>
+
+    <div class="optionsbar" id="optionsbar" aria-label="Tool options"></div>
+
+    <div class="workspace">
+      <aside class="sidepanel" id="sidepanel">
+        <section class="panel" id="panel-layers">
+          <button type="button" class="panel-head">Layers</button>
+          <div class="panel-body">
+            <div class="layer-controls">
+              <select id="layer-blend" aria-label="Blend mode"></select>
+              <label class="opacity-ctl">
+                <span>Opacity</span>
+                <input type="range" id="layer-opacity" min="0" max="100" value="100" aria-label="Layer opacity">
+                <output id="layer-opacity-value">100%</output>
+              </label>
+            </div>
+            <ul class="layer-list" id="layer-list"></ul>
+            <div class="panel-actions" id="layer-actions"></div>
+          </div>
+        </section>
+        <section class="panel" id="panel-adjust">
+          <button type="button" class="panel-head">Adjust</button>
+          <div class="panel-body"><div class="chip-grid" id="adjust-grid"></div></div>
+        </section>
+        <section class="panel panel-grow" id="panel-history">
+          <button type="button" class="panel-head">History</button>
+          <div class="panel-body"><ol class="history-list" id="history-list"></ol></div>
+        </section>
+      </aside>
+
+      <main class="stage" id="stage">
+        <canvas id="view"></canvas>
+        <canvas id="overlay" aria-label="Image canvas"></canvas>
+        <div class="start" id="start">
+          <div class="start-card">
+            <div class="start-mark"></div>
+            <h1>Tessera</h1>
+            <p>A layered image editor that lives in this tab. Nothing you open is ever uploaded.</p>
+            <div class="start-actions">
+              <button type="button" class="btn btn-primary btn-lg" id="start-open">Open an image…</button>
+              <button type="button" class="btn btn-lg" id="start-new">New blank canvas</button>
+            </div>
+            <p class="start-hint">…or drop an image file here, or paste one from the clipboard.</p>
+          </div>
+        </div>
+        <div class="drop-hint">Drop to open</div>
+      </main>
+
+      <nav class="toolrail" id="toolrail" aria-label="Tools">
+        <div class="tool-buttons" id="tool-buttons"></div>
+        <div class="colors">
+          <div class="swatches">
+            <button type="button" class="swatch" id="swatch-primary" aria-label="Primary colour"></button>
+            <button type="button" class="swatch swatch-secondary" id="swatch-secondary" aria-label="Secondary colour"></button>
+          </div>
+          <div class="swatch-actions">
+            <button type="button" class="mini-btn" id="swap-colors" title="Swap colours (X)" aria-label="Swap colours"></button>
+            <button type="button" class="mini-btn" id="reset-colors" title="Black and white (D)" aria-label="Default colours"></button>
+          </div>
+          <code class="color-hex" id="color-hex"></code>
+        </div>
+      </nav>
+    </div>
+
+    <footer class="statusbar">
+      <span id="status-hint" class="status-hint"></span>
+      <span id="status-pos" class="status-pos"></span>
+      <span id="status-size" class="status-size"></span>
+      <div class="zoom-ctl">
+        <button type="button" class="mini-btn" id="zoom-out" title="Zoom out" aria-label="Zoom out"></button>
+        <button type="button" class="zoom-label" id="zoom-label" title="Click for 100%">–</button>
+        <button type="button" class="mini-btn" id="zoom-in" title="Zoom in" aria-label="Zoom in"></button>
+        <button type="button" class="mini-btn" id="zoom-fit" title="Fit on screen" aria-label="Fit on screen"></button>
+      </div>
+    </footer>
+  </div>
+
+  <input type="file" id="file-input" accept="image/*" class="visually-hidden" tabindex="-1" aria-hidden="true">
+  <input type="color" id="color-input" class="visually-hidden" tabindex="-1" aria-hidden="true">
+  <div class="toasts" id="toasts" aria-live="polite"></div>
+
+  <script src="js/core/color.js"></script>
+  <script src="js/core/geometry.js"></script>
+  <script src="js/core/history.js"></script>
+  <script src="js/core/imageops.js"></script>
+  <script src="js/core/effects.js"></script>
+  <script src="js/icons.js"></script>
+  <script src="js/editor.js"></script>
+  <script src="js/view.js"></script>
+  <script src="js/tools.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
